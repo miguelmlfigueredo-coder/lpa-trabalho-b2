@@ -190,3 +190,30 @@ int cadastrarVeiculo(struct Colecao *c, int mapa[FILEIRAS][COLUNAS])
     printf("Veiculo %s cadastrado na vaga F%d/C%d.\n", novo.id, fileira, coluna);
     return 1;
 }
+
+void consultarVeiculo(struct Colecao *c)
+{
+    char entrada[64];
+    int indice;
+    struct Veiculo *v;
+
+    printf("Identificador: ");
+    if (lerLinha(entrada, (int)sizeof(entrada)) != 1 ||
+        !validarIdentificador(entrada)) {
+        printf("Veiculo nao localizado.\n");
+        return;
+    }
+
+    indice = buscarVeiculo(c, entrada);
+    if (indice == -1) {
+        printf("Veiculo nao localizado.\n");
+        return;
+    }
+
+    v = &c->dados[indice];
+    printf("\nVeiculo encontrado\n");
+    printf("Identificador: %s\n", v->id);
+    printf("Descricao: %s\n", v->descricao);
+    printf("Categoria: %s\n", v->categoria == 1 ? "Carro" : "Moto");
+    printf("Vaga: Fileira %d - Coluna %d\n", v->fileira, v->coluna);
+}
