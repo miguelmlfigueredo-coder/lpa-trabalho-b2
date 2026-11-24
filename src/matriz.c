@@ -1,5 +1,5 @@
+#include <stdio.h>
 #include "estacionamento.h"
-
 int posicaoValida(int fileira, int coluna) {
     if (fileira >= 0 && fileira < FILEIRAS &&
         coluna >= 0 && coluna < COLUNAS) {
@@ -63,4 +63,23 @@ void exibirMapa(int mapa[FILEIRAS][COLUNAS]) {
     }
 
     printf("\n[L] = Livre | [O] = Ocupada\n");
+}
+void listarVeiculos(struct Colecao *c) {
+    int i;
+
+    if (c == NULL || c->quantidade == 0) {
+        printf("\nNenhum veiculo cadastrado.\n");
+        return;
+    }
+
+    printf("\n===== VEICULOS CADASTRADOS =====\n");
+
+    for (i = 0; i < c->quantidade; i++) {
+        printf("\nVeiculo %d\n", i + 1);
+        printf("Identificador: %s\n", c->dados[i].id);
+        printf("Descricao: %s\n", c->dados[i].descricao);
+        printf("Categoria: %d\n", c->dados[i].categoria);
+        printf("Fileira: %d\n", c->dados[i].fileira + 1);
+        printf("Coluna: %d\n", c->dados[i].coluna + 1);
+    }
 }
