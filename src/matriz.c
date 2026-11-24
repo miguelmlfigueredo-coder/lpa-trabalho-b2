@@ -42,4 +42,25 @@ void liberarVaga(int mapa[FILEIRAS][COLUNAS], int fileira, int coluna) {
     if (posicaoValida(fileira, coluna)) {
         mapa[fileira][coluna] = 0;
     }
+} 
+void exibirMapa(int mapa[FILEIRAS][COLUNAS]) {
+    int i, j;
+
+    printf("\n===== MAPA DO ESTACIONAMENTO =====\n\n");
+
+    for (i = 0; i < FILEIRAS; i++) {
+        printf("Fileira %d: ", i + 1);
+
+        for (j = 0; j < COLUNAS; j++) {
+            if (mapa[i][j] == 0) {
+                printf("[L] ");
+            } else {
+                printf("[O] ");
+            }
+        }
+
+        printf("\n");
+    }
+
+    printf("\n[L] = Livre | [O] = Ocupada\n");
 }
