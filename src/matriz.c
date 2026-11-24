@@ -68,7 +68,7 @@ void listarVeiculos(struct Colecao *c) {
     int i;
 
     if if (c == NULL || c->quantidade == 0 ||
-    (c->quantidade > 0 && c->dados == NULL)) { {
+    (c->quantidade > 0 && c->dados == NULL)) {
         printf("\nNenhum veiculo cadastrado.\n");
         return;
     }
@@ -182,7 +182,7 @@ void gerarRelatorio(struct Colecao *c, int mapa[FILEIRAS][COLUNAS]) {
     float percentual;
 
     if if (c == NULL || mapa == NULL ||
-    (c->quantidade > 0 && c->dados == NULL)) {{
+    (c->quantidade > 0 && c->dados == NULL)) {
         printf("\nErro ao gerar relatorio.\n");
         return;
     }
