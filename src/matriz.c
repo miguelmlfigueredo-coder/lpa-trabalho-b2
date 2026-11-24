@@ -67,7 +67,8 @@ void exibirMapa(int mapa[FILEIRAS][COLUNAS]) {
 void listarVeiculos(struct Colecao *c) {
     int i;
 
-    if (c == NULL || c->quantidade == 0) {
+    if if (c == NULL || c->quantidade == 0 ||
+    (c->quantidade > 0 && c->dados == NULL)) { {
         printf("\nNenhum veiculo cadastrado.\n");
         return;
     }
@@ -78,7 +79,7 @@ void listarVeiculos(struct Colecao *c) {
         printf("\nVeiculo %d\n", i + 1);
         printf("Identificador: %s\n", c->dados[i].id);
         printf("Descricao: %s\n", c->dados[i].descricao);
-        printf("Categoria: %d\n", c->dados[i].categoria);
+        printf("Categoria: %s\n",c->dados[i].categoria == 1 ? "Carro" : "Moto");
         printf("Fileira: %d\n", c->dados[i].fileira);
         printf("Coluna: %d\n", c->dados[i].coluna);
     }
@@ -170,4 +171,52 @@ int moverVeiculo(struct Colecao *c, int mapa[FILEIRAS][COLUNAS]) {
            v->fileira, v->coluna);
 
     return 1;
+}
+
+void gerarRelatorio(struct Colecao *c, int mapa[FILEIRAS][COLUNAS]) {
+    int i, j;
+    int ocupadas = 0;
+    int livres;
+    int carros = 0;
+    int motos = 0;
+    float percentual;
+
+    if if (c == NULL || mapa == NULL ||
+    (c->quantidade > 0 && c->dados == NULL)) {{
+        printf("\nErro ao gerar relatorio.\n");
+        return;
+    }
+
+    for (i = 0; i < FILEIRAS; i++) {
+        for (j = 0; j < COLUNAS; j++) {
+            if (mapa[i][j] == 1) {
+                ocupadas++;
+            }
+        }
+    }
+
+    livres = TOTAL_VAGAS - ocupadas;
+
+
+    for (i = 0; i < c->quantidade; i++) {
+        if (c->dados[i].categoria == 1) {
+            carros++;
+        } else if (c->dados[i].categoria == 2) {
+            motos++;
+        }
+    }
+
+    percentual = ((float)ocupadas / TOTAL_VAGAS) * 100;
+
+
+    printf("\n========== RELATORIO DO ESTACIONAMENTO ==========\n");
+
+    printf("\nTotal de vagas: %d", TOTAL_VAGAS);
+    printf("\nVagas ocupadas: %d", ocupadas);
+    printf("\nVagas livres: %d", livres);
+    printf("\nPercentual de ocupacao: %.2f%%", percentual);
+    printf("\nQuantidade de carros: %d", carros);
+    printf("\nQuantidade de motos: %d", motos);
+
+    printf("\n\n=================================================\n");
 }
