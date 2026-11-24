@@ -217,3 +217,63 @@ void consultarVeiculo(struct Colecao *c)
     printf("Categoria: %s\n", v->categoria == 1 ? "Carro" : "Moto");
     printf("Vaga: Fileira %d - Coluna %d\n", v->fileira, v->coluna);
 }
+
+int atualizarVeiculo(struct Colecao *c)
+{
+    char entrada[64];
+    char descricao[62];
+    int categoria;
+    int indice;
+    int opcao;
+    int novaCategoria;
+    char novaDescricao[61];
+    struct Veiculo *v;
+
+    printf("Identificador: ");
+    if (lerLinha(entrada, (int)sizeof(entrada)) != 1 ||
+        !validarIdentificador(entrada)) {
+        printf("Veiculo nao localizado.\n");
+        return 0;
+    }
+
+    indice = buscarVeiculo(c, entrada);
+    if (indice == -1) {
+        printf("Veiculo nao localizado.\n");
+        return 0;
+    }
+    v = &c->dados[indice];
+
+    printf("O que deseja alterar?\n");
+    printf("1 - Descricao\n2 - Categoria\n3 - Ambas\n");
+    if (!lerInteiro("Opcao: ", &opcao) || opcao < 1 || opcao > 3) {
+        printf("Opcao invalida. Atualizacao cancelada.\n");
+        return 0;
+    }
+
+    novaCategoria = v->categoria;
+    strcpy(novaDescricao, v->descricao);
+
+    if (opcao == 1 || opcao == 3) {
+        printf("Nova descricao (1 a 60 caracteres): ");
+        if (lerLinha(descricao, (int)sizeof(descricao)) != 1 ||
+            strlen(descricao) == 0) {
+            printf("Descricao invalida. Atualizacao cancelada.\n");
+            return 0;
+        }
+        strcpy(novaDescricao, descricao);
+    }
+
+    if (opcao == 2 || opcao == 3) {
+        if (!lerInteiro("Nova categoria (1 = carro, 2 = moto): ", &categoria) ||
+            (categoria != 1 && categoria != 2)) {
+            printf("Categoria invalida. Atualizacao cancelada.\n");
+            return 0;
+        }
+        novaCategoria = categoria;
+    }
+
+    strcpy(v->descricao, novaDescricao);
+    v->categoria = novaCategoria;
+    printf("Veiculo %s atualizado.\n", v->id);
+    return 1;
+}
