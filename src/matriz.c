@@ -67,7 +67,7 @@ void exibirMapa(int mapa[FILEIRAS][COLUNAS]) {
 void listarVeiculos(struct Colecao *c) {
     int i;
 
-    if if (c == NULL || c->quantidade == 0 ||
+     if (c == NULL || c->quantidade == 0 ||
     (c->quantidade > 0 && c->dados == NULL)) {
         printf("\nNenhum veiculo cadastrado.\n");
         return;
@@ -91,7 +91,7 @@ static int lerInteiroMatriz(const char *mensagem, int *valor, int maximo) {
 
     printf("%s", mensagem);
 
-    if (lerLinha(entrada, sizeof(entrada)) != 1) {
+    if (lerLinha(entrada, (int)sizeof(entrada)) != 1) {
         return 0;
     }
 
@@ -119,7 +119,7 @@ int moverVeiculo(struct Colecao *c, int mapa[FILEIRAS][COLUNAS]) {
 
     printf("\nIdentificador do veiculo: ");
 
-    if (lerLinha(id, sizeof(id)) != 1 ||
+    if (lerLinha(id, (int)sizeof(id)) != 1 ||
         !validarIdentificador(id)) {
         printf("Identificador invalido.\n");
         return 0;
@@ -181,7 +181,7 @@ void gerarRelatorio(struct Colecao *c, int mapa[FILEIRAS][COLUNAS]) {
     int motos = 0;
     float percentual;
 
-    if if (c == NULL || mapa == NULL ||
+     if (c == NULL || mapa == NULL ||
     (c->quantidade > 0 && c->dados == NULL)) {
         printf("\nErro ao gerar relatorio.\n");
         return;
