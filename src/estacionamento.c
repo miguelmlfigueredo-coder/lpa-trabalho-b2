@@ -277,3 +277,39 @@ int atualizarVeiculo(struct Colecao *c)
     printf("Veiculo %s atualizado.\n", v->id);
     return 1;
 }
+int removerVeiculo(struct Colecao *c, int mapa[FILEIRAS][COLUNAS])
+{
+    char entrada[64];
+    int indice;
+    int i;
+    int fileira;
+    int coluna;
+    char id[8];
+
+    printf("Identificador: ");
+    if (lerLinha(entrada, (int)sizeof(entrada)) != 1 ||
+        !validarIdentificador(entrada)) {
+        printf("Veiculo nao localizado.\n");
+        return 0;
+    }
+
+    indice = buscarVeiculo(c, entrada);
+    if (indice == -1) {
+        printf("Veiculo nao localizado.\n");
+        return 0;
+    }
+
+    fileira = c->dados[indice].fileira;
+    coluna = c->dados[indice].coluna;
+    strcpy(id, c->dados[indice].id);
+
+    liberarVaga(mapa, fileira, coluna);
+
+    for (i = indice; i < c->quantidade - 1; i++) {
+        c->dados[i] = c->dados[i + 1];
+    }
+    c->quantidade--;
+
+    printf("Veiculo %s removido. Vaga F%d/C%d liberada.\n", id, fileira, coluna);
+    return 1;
+}
